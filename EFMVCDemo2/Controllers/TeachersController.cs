@@ -58,12 +58,12 @@ namespace EFMVCDemo2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TeacherId,TeacherName,TeacherAddress,TeacherAge")] Teacher teacher)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 _context.Add(teacher);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
+            //}
             return View(teacher);
         }
 
@@ -95,8 +95,8 @@ namespace EFMVCDemo2.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 try
                 {
                     _context.Update(teacher);
@@ -114,7 +114,7 @@ namespace EFMVCDemo2.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
+            //}
             return View(teacher);
         }
 

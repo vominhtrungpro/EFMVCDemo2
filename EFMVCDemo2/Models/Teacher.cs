@@ -12,5 +12,7 @@ namespace EFMVCDemo2.Models
         public string TeacherAddress { get; set; }
 
         public int TeacherAge { get; set; }
+
+        public List<TeacherSubject> TeacherSubject { get; set; }
     }
 }

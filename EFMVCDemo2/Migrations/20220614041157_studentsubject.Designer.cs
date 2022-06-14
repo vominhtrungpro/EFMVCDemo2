@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFMVCDemo2.Migrations
 {
     [DbContext(typeof(MVCContext))]
-    [Migration("20220614023524_studentsubject")]
+    [Migration("20220614041157_studentsubject")]
     partial class studentsubject
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

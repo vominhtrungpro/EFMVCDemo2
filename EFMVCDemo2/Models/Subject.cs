@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EFMVCDemo2.Models
 {
@@ -10,8 +11,9 @@ namespace EFMVCDemo2.Models
         public string SubjectName { get; set; }
 
         public string SubjectDetail { get; set; }
-
         public List<StudentSubject> StudentSubject { get; set; }
+
+        public List<TeacherSubject> TeacherSubject { get; set; }
 
 
     }

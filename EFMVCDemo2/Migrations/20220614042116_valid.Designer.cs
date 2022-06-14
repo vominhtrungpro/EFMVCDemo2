@@ -3,6 +3,7 @@ using EFMVCDemo2.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFMVCDemo2.Migrations
 {
     [DbContext(typeof(MVCContext))]
-    partial class MVCContextModelSnapshot : ModelSnapshot
+    [Migration("20220614042116_valid")]
+    partial class valid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,29 +115,6 @@ namespace EFMVCDemo2.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("EFMVCDemo2.Models.TeacherSubject", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeacherId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubjectId");
-
-                    b.HasIndex("TeacherId");
-
-                    b.ToTable("TeacherSubject");
-                });
-
             modelBuilder.Entity("EFMVCDemo2.Models.StudentSubject", b =>
                 {
                     b.HasOne("EFMVCDemo2.Models.Student", "student")
@@ -155,25 +134,6 @@ namespace EFMVCDemo2.Migrations
                     b.Navigation("subject");
                 });
 
-            modelBuilder.Entity("EFMVCDemo2.Models.TeacherSubject", b =>
-                {
-                    b.HasOne("EFMVCDemo2.Models.Subject", "subject")
-                        .WithMany("TeacherSubject")
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EFMVCDemo2.Models.Teacher", "teacher")
-                        .WithMany("TeacherSubject")
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("subject");
-
-                    b.Navigation("teacher");
-                });
-
             modelBuilder.Entity("EFMVCDemo2.Models.Student", b =>
                 {
                     b.Navigation("StudentSubject");
@@ -182,13 +142,6 @@ namespace EFMVCDemo2.Migrations
             modelBuilder.Entity("EFMVCDemo2.Models.Subject", b =>
                 {
                     b.Navigation("StudentSubject");
-
-                    b.Navigation("TeacherSubject");
-                });
-
-            modelBuilder.Entity("EFMVCDemo2.Models.Teacher", b =>
-                {
-                    b.Navigation("TeacherSubject");
                 });
 #pragma warning restore 612, 618
         }

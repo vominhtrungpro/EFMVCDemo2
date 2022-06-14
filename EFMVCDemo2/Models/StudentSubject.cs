@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EFMVCDemo2.Models
 {
@@ -6,13 +7,11 @@ namespace EFMVCDemo2.Models
     {
         [Key]
         public int Id { get; set; }
-
-        public int StudentId { get; set; }
-
         public Student student { get; set; }
 
-        public int SubjectId { get; set; }
-
+        public int StudentId { get; set; }
         public Subject subject { get; set; }
+
+        public int SubjectId { get; set; }
     }
 }

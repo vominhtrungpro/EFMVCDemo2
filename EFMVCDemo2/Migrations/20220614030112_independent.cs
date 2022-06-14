@@ -4,7 +4,7 @@
 
 namespace EFMVCDemo2.Migrations
 {
-    public partial class Independent : Migration
+    public partial class independent : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

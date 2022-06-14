@@ -21,6 +21,17 @@ namespace EFMVCDemo2.Context
                 .HasOne(stu => stu.student)
                 .WithMany(ss => ss.StudentSubject)
                 .HasForeignKey(stuid => stuid.StudentId);
+
+            modelBuilder.Entity<TeacherSubject>()
+                .HasOne(sub => sub.subject)
+                .WithMany(ts => ts.TeacherSubject)
+                .HasForeignKey(subid => subid.SubjectId);
+
+            modelBuilder.Entity<TeacherSubject>()
+                .HasOne(tea => tea.teacher)
+                .WithMany(ts => ts.TeacherSubject)
+                .HasForeignKey(teaid => teaid.TeacherId);
+                
         }
 
         public DbSet<Subject> Subjects { get; set; }
@@ -30,6 +41,8 @@ namespace EFMVCDemo2.Context
         public DbSet<Student> Students { get; set; }
 
         public DbSet<StudentSubject> StudentSubjects { get; set; }
+
+        public DbSet<EFMVCDemo2.Models.TeacherSubject>? TeacherSubject { get; set; }
 
 
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EFMVCDemo2.Context;
 using EFMVCDemo2.Models;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EFMVCDemo2.Controllers
 {
@@ -58,12 +59,45 @@ namespace EFMVCDemo2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StudentId,StudentName,StudentAddress,StudentAge")] Student student)
         {
-            if (ModelState.IsValid)
-            {
+            //using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
+            //{
+            //    try
+            //    {
+            //        _context.Add(student);
+            //        await _context.SaveChangesAsync();
+            //        return RedirectToAction(nameof(Index));
+            //        transaction.Commit();
+
+
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        transaction.Rollback();
+            //    }
+            //    return View(student);
+            //}
+
+            //var transaction = _context.Database.BeginTransaction();
+            //try
+            //{
+            //    _context.Add(student);
+            //    await _context.SaveChangesAsync();
+            //    transaction.Commit();
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //catch (Exception ex)
+            //{
+            //    transaction.Rollback();
+            //}
+            //return View(student);
+
+
+            //if (ModelState.IsValid)
+            //{
                 _context.Add(student);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
+            //}
             return View(student);
         }
 
@@ -95,8 +129,8 @@ namespace EFMVCDemo2.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 try
                 {
                     _context.Update(student);
@@ -114,7 +148,7 @@ namespace EFMVCDemo2.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
+            //}
             return View(student);
         }
 
