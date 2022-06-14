@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using EFMVCDemo2.Context;
 using EFMVCDemo2.Models;
 using Microsoft.EntityFrameworkCore.Storage;
+using EFMVCDemo2.Dtos;
 
 namespace EFMVCDemo2.Controllers
 {
@@ -57,49 +58,39 @@ namespace EFMVCDemo2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StudentId,StudentName,StudentAddress,StudentAge")] Student student)
+        public async Task<IActionResult> Create(CreateMultistudent cms)
         {
-            //using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
-            //{
-            //    try
-            //    {
-            //        _context.Add(student);
-            //        await _context.SaveChangesAsync();
-            //        return RedirectToAction(nameof(Index));
-            //        transaction.Commit();
 
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        transaction.Rollback();
-            //    }
-            //    return View(student);
-            //}
-
-            //var transaction = _context.Database.BeginTransaction();
-            //try
-            //{
-            //    _context.Add(student);
-            //    await _context.SaveChangesAsync();
-            //    transaction.Commit();
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //catch (Exception ex)
-            //{
-            //    transaction.Rollback();
-            //}
-            //return View(student);
-
-
-            //if (ModelState.IsValid)
-            //{
-                _context.Add(student);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            //}
-            return View(student);
+            using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    // add student 1
+                    var student1 = new Student { StudentName = cms.StudentName1, StudentAddress = cms.StudentAddress1, StudentAge = cms.StudentAge1 };
+                    _context.Students.Add(student1);
+                    _context.SaveChanges();
+                    await transaction.CreateSavepointAsync("insert student 1");
+                    //add student 2
+                    var student2 = new Student { StudentName = cms.StudentName2, StudentAddress = cms.StudentAddress2, StudentAge = cms.StudentAge2 };
+                    _context.Students.Add(student2);
+                    _context.SaveChanges();
+                    await transaction.CreateSavepointAsync("insert student 2");
+                    // add student 3
+                    var student3 = new Student { StudentName = cms.StudentName3, StudentAddress = cms.StudentAddress3, StudentAge = cms.StudentAge3 };
+                    _context.Students.Add(student3);
+                    _context.SaveChanges();
+                    await transaction.CreateSavepointAsync("insert student 3");
+                    transaction.Commit();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception)
+                {
+                    transaction.RollbackToSavepoint("insert student 1");
+                }
+            }
+            return View();
         }
+
 
         // GET: Students/Edit/5
         public async Task<IActionResult> Edit(int? id)
